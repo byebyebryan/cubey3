@@ -8,58 +8,31 @@ namespace cubey3 {
 	public:
 		virtual ~IService() {}
 
-		virtual void Init() {}
-		virtual void StartUp() {}
-		virtual void Pause() {}
-		virtual void Resume() {}
-		virtual void ShutDown() {}
-		virtual void Destroy() {}
+		virtual void OnCreate() {}
+		virtual void OnDestroy() {}
 
 		static ServiceInterfaceT* GetInstance() {
 			return ServiceLocator<ServiceInterfaceT>::service();
 		}
 
 		template<typename ServiceT = ServiceInterfaceT>
-		static void InitService(ServiceT* _new_service = nullptr) {
+		static void CreateService(ServiceT* new_service = nullptr) {
 			DestroyService();
 
-			if(!_new_service) {
-				_new_service = new ServiceT();
+			if(!new_service) {
+				new_service = new ServiceT();
 			}
 
-			ServiceLocator<ServiceInterfaceT>::set_service(_new_service);
+			ServiceLocator<ServiceInterfaceT>::set_service(new_service);
 
-			_new_service->Init();
-		}
-
-		static void StartUpService() {
-			if (GetInstance()) {
-				GetInstance()->StartUp();
-			}
-		}
-
-		static void PauseService() {
-			if (GetInstance()) {
-				GetInstance()->Pause();
-			}
-		}
-		static void ResumeService() {
-			if (GetInstance()) {
-				GetInstance()->Resume();
-			}
-		}
-
-		static void ShutDownService() {
-			if (GetInstance()) {
-				GetInstance()->ShutDown();
-			}
+			new_service->OnCreation();
 		}
 
 		static void DestroyService() {
 			ServiceInterfaceT* current_service = GetInstance();
 
 			if (current_service) {
-				current_service->Destroy();
+				current_service->OnDestroy();
 				delete current_service;
 			}
 

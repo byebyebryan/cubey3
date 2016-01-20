@@ -18,20 +18,20 @@ namespace cubey3 {
 		DuoBufferMT () : DuoBuffer() {
 		}
 
-		DuoBufferMT (const DuoBufferMT<BufferT>& _other) {
-			std::lock_guard<std::mutex> f_lock(_other.front_buffer_mutex_);
-			std::lock_guard<std::mutex> b_lock(_other.back_buffer_mutex_);
-			DuoBuffer<BufferT>::ping_ = _other.ping_;
-			DuoBuffer<BufferT>::pong_ = _other.pong_;
-			DuoBuffer<BufferT>::flip_ = _other.flip_;
+		DuoBufferMT (const DuoBufferMT<BufferT>& other) {
+			std::lock_guard<std::mutex> f_lock(other.front_buffer_mutex_);
+			std::lock_guard<std::mutex> b_lock(other.back_buffer_mutex_);
+			DuoBuffer<BufferT>::ping_ = other.ping_;
+			DuoBuffer<BufferT>::pong_ = other.pong_;
+			DuoBuffer<BufferT>::flip_ = other.flip_;
 		}
 
-		DuoBufferMT(DuoBufferMT<BufferT>&& _other) {
-			std::lock_guard<std::mutex> f_lock(_other.front_buffer_mutex_);
-			std::lock_guard<std::mutex> b_lock(_other.back_buffer_mutex_);
-			DuoBuffer<BufferT>::ping_ = std::move(_other.ping_);
-			DuoBuffer<BufferT>::pong_ = std::move(_other.pong_);
-			DuoBuffer<BufferT>::flip_ = std::move(_other.flip_);
+		DuoBufferMT(DuoBufferMT<BufferT>&& other) {
+			std::lock_guard<std::mutex> f_lock(other.front_buffer_mutex_);
+			std::lock_guard<std::mutex> b_lock(other.back_buffer_mutex_);
+			DuoBuffer<BufferT>::ping_ = std::move(other.ping_);
+			DuoBuffer<BufferT>::pong_ = std::move(other.pong_);
+			DuoBuffer<BufferT>::flip_ = std::move(other.flip_);
 		}
 
 		void SwapMT() {

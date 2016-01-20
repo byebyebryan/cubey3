@@ -22,6 +22,7 @@
     <ClInclude Include="include\cubey3.h" />
     <ClInclude Include="include\Service\IEvent.h" />
     <ClInclude Include="include\Service\IService.h" />
+    <ClInclude Include="include\Service\ISystemService.h" />
     <ClInclude Include="include\Service\ServiceLocator.h" />
     <ClInclude Include="include\Service\SystemEvent.h" />
     <ClInclude Include="include\Service\SystemEventChannel.h" />

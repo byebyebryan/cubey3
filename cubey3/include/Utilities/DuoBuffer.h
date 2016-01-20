@@ -10,15 +10,15 @@ namespace cubey3 {
 				flip_(false) {
 		}
 
-		DuoBuffer(const BufferT& _front_buffer) :
-				ping_(_front_buffer), 
+		DuoBuffer(const BufferT& front_buffer) :
+				ping_(front_buffer), 
 				pong_(BufferT()), 
 				flip_(false) {
 		}
 
-		DuoBuffer(const BufferT& _front_buffer, const BufferT& _back_buffer) :
-				ping_(_front_buffer), 
-				pong_(_back_buffer), 
+		DuoBuffer(const BufferT& front_buffer, const BufferT& back_buffer) :
+				ping_(front_buffer), 
+				pong_(back_buffer), 
 				flip_(false) {
 		}
 

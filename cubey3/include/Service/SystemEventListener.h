@@ -5,15 +5,15 @@
 #include "../Utilities/IDGenerator.h"
 
 namespace cubey3 {
-	template<typename EventT, size_t StreamID = 0>
+	template<typename EventT>
 	class SystemEventLisenter {
 	public:
 		SystemEventLisenter() :
 			id_(0) {}
 
-		SystemEventLisenter(const std::function<void(const EventT&)>& _handler_func) :
+		SystemEventLisenter(const std::function<void(const EventT&)>& handler_func) :
 			id_(0),
-			handler_func_(_handler_func) {}
+			handler_func_(handler_func) {}
 
 		~SystemEventLisenter() {
 			if(id_ != 0) {
@@ -21,6 +21,7 @@ namespace cubey3 {
 			}
 		}
 
+		template<size_t StreamID = kIDGeneratorDefaultStream>
 		void PushToChannel() {
 			if(id_ == 0) {
 				id_ = IDGenerator::NextID<EventT, StreamID>();

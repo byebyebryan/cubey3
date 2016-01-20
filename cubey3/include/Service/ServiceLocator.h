@@ -8,8 +8,8 @@ namespace cubey3 {
 			return service_;
 		}
 
-		static void set_service(ServiceInterfaceT* _service) {
-			service_ = _service;
+		static void set_service(ServiceInterfaceT* service) {
+			service_ = service;
 		}
 	private:
 		static ServiceInterfaceT* service_;

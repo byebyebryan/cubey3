@@ -8,16 +8,16 @@ namespace cubey3 {
 	template<typename EventT>
 	class SystemEventChannel {
 	public:
-		static void Add(size_t _id, const std::function<void(const EventT&)>& _handler_func) {
+		static void Add(size_t id, const std::function<void(const EventT&)>& handler_func) {
 			auto lock = std::lock_guard<std::mutex>(mutex_);
-			if (handler_funcs_.find(_id) == handler_funcs_.end()) {
-				handler_funcs_[_id] = _handler_func;
+			if (handler_funcs_.find(id) == handler_funcs_.end()) {
+				handler_funcs_[id] = handler_func;
 			}
 		}
 
-		static void Remove(size_t _id) {
+		static void Remove(size_t id) {
 			auto lock = std::lock_guard<std::mutex>(mutex_);
-			handler_funcs_.erase(_id);
+			handler_funcs_.erase(id);
 		}
 
 		static void Mute() {
@@ -30,17 +30,17 @@ namespace cubey3 {
 			is_muted_ = false;
 		}
 
-		static void Broadcast(const EventT& _event) {
+		static void Broadcast(const EventT& event) {
 			auto lock = std::lock_guard<std::mutex>(mutex_);
 			if (!is_muted_) {
 				for (auto it : handler_funcs_) {
-					it->second(_event);
+					it->second(event);
 				}
 			}
 		}
 
-		static void Broadcast(std::initializer_list<EventT> _event_args) {
-			Broadcast(EventT(_event_args));
+		static void Broadcast(std::initializer_list<EventT> event_args) {
+			Broadcast(EventT(event_args));
 		}
 
 	private:

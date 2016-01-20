@@ -13,13 +13,15 @@ namespace cubey3 {
 
 	class TimeManager : public IService<TimeManager> {
 	public:
-		void StartUp() override;
+		void OnCreate() override;
 
-		TimePoint GetCurrentTimePoint();
-		SystemTimePoint GetCurrentSystemTimePoint();
+		static double GetElapsedTime();
 
-		std::string GetTimeString(const SystemTimePoint& _system_time_point, const std::string& _format = kDefaultTimeFormat);
-		std::string GetCurrentTimeString(const std::string& _format = kDefaultTimeFormat);
+		static TimePoint GetCurrentTimePoint();
+		static SystemTimePoint GetCurrentSystemTimePoint();
+
+		static std::string GetTimeString(const SystemTimePoint& _system_time_point, const std::string& _format = kDefaultTimeFormat);
+		static std::string GetCurrentTimeString(const std::string& _format = kDefaultTimeFormat);
 
 	private:
 		TimePoint start_time_point_;

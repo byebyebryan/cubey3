@@ -9,9 +9,9 @@ namespace cubey3 {
 		return false;
 	}
 
-	inline void Assert2(bool _cond, const std::string& _error_msg) {
-		if (!_cond) {
-			std::cout << "Assertion message: " << _error_msg << std::endl;
+	inline void Assert2(bool cond, const std::string& error_msg) {
+		if (!cond) {
+			std::cout << "Assertion message: " << error_msg << std::endl;
 			assert(false);
 		}
 	}
