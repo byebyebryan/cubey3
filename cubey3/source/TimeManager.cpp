@@ -9,9 +9,13 @@ namespace cubey3 {
 		start_system_time_point_ = GetCurrentSystemTimePoint();
 	}
 
-	double TimeManager::GetElapsedTime() {
-		std::chrono::duration<double> elapsed_time = GetCurrentTimePoint() - TimeManager::GetInstance()->start_time_point_;
+	double TimeManager::GetElapsedTime(TimePoint start_time_point) const {
+		std::chrono::duration<double> elapsed_time = GetCurrentTimePoint() - start_time_point;
 		return elapsed_time.count();
+	}
+
+	double TimeManager::GetElapsedTime() const {
+		return GetElapsedTime(start_time_point_);
 	}
 
 	TimePoint TimeManager::GetCurrentTimePoint() {

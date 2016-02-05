@@ -11,7 +11,7 @@ namespace cubey3 {
 		virtual void OnCreate() {}
 		virtual void OnDestroy() {}
 
-		static ServiceInterfaceT* GetInstance() {
+		static ServiceInterfaceT* GetService() {
 			return ServiceLocator<ServiceInterfaceT>::service();
 		}
 
@@ -25,11 +25,11 @@ namespace cubey3 {
 
 			ServiceLocator<ServiceInterfaceT>::set_service(new_service);
 
-			new_service->OnCreation();
+			new_service->OnCreate();
 		}
 
 		static void DestroyService() {
-			ServiceInterfaceT* current_service = GetInstance();
+			ServiceInterfaceT* current_service = GetService();
 
 			if (current_service) {
 				current_service->OnDestroy();

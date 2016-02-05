@@ -20,21 +20,33 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\cubey3.h" />
+    <ClInclude Include="include\Service\FileManager.h" />
     <ClInclude Include="include\Service\IEvent.h" />
     <ClInclude Include="include\Service\IService.h" />
     <ClInclude Include="include\Service\ISystemService.h" />
+    <ClInclude Include="include\Service\ITask.h" />
+    <ClInclude Include="include\Service\Logger.h" />
+    <ClInclude Include="include\Service\OutputFile.h" />
+    <ClInclude Include="include\Service\RepeatingTask.h" />
     <ClInclude Include="include\Service\ServiceLocator.h" />
     <ClInclude Include="include\Service\SystemEvent.h" />
     <ClInclude Include="include\Service\SystemEventChannel.h" />
     <ClInclude Include="include\Service\SystemEventListener.h" />
+    <ClInclude Include="include\Service\TaskScheduler.h" />
+    <ClInclude Include="include\Service\ThreadManager.h" />
     <ClInclude Include="include\Service\TimeManager.h" />
     <ClInclude Include="include\Utilities\DuoBuffer.h" />
     <ClInclude Include="include\Utilities\DuoBufferMT.h" />
     <ClInclude Include="include\Utilities\IDGenerator.h" />
+    <ClInclude Include="include\Utilities\Types.h" />
     <ClInclude Include="include\Utilities\Utilities.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\cubey3.cpp" />
+    <ClCompile Include="source\FileManager.cpp" />
+    <ClCompile Include="source\Logger.cpp" />
+    <ClCompile Include="source\TaskScheduler.cpp" />
+    <ClCompile Include="source\ThreadManager.cpp" />
     <ClCompile Include="source\TimeManager.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

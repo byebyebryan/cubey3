@@ -3,6 +3,7 @@
 #include <thread>
 #include <mutex>
 
+#include "Types.h"
 #include "DuoBuffer.h"
 
 namespace cubey3 {
@@ -11,7 +12,7 @@ namespace cubey3 {
 	class DuoBufferMT : public DuoBuffer<BufferT> {
 	public:
 		struct BufferMT {
-			std::unique_lock<std::mutex> lock_;
+			Lock lock_;
 			BufferT& buffer_;
 		};
 
@@ -19,16 +20,16 @@ namespace cubey3 {
 		}
 
 		DuoBufferMT (const DuoBufferMT<BufferT>& other) {
-			std::lock_guard<std::mutex> f_lock(other.front_buffer_mutex_);
-			std::lock_guard<std::mutex> b_lock(other.back_buffer_mutex_);
+			SimpleLock f_lock(other.front_buffer_mutex_);
+			SimpleLock b_lock(other.back_buffer_mutex_);
 			DuoBuffer<BufferT>::ping_ = other.ping_;
 			DuoBuffer<BufferT>::pong_ = other.pong_;
 			DuoBuffer<BufferT>::flip_ = other.flip_;
 		}
 
 		DuoBufferMT(DuoBufferMT<BufferT>&& other) {
-			std::lock_guard<std::mutex> f_lock(other.front_buffer_mutex_);
-			std::lock_guard<std::mutex> b_lock(other.back_buffer_mutex_);
+			SimpleLock f_lock(other.front_buffer_mutex_);
+			SimpleLock b_lock(other.back_buffer_mutex_);
 			DuoBuffer<BufferT>::ping_ = std::move(other.ping_);
 			DuoBuffer<BufferT>::pong_ = std::move(other.pong_);
 			DuoBuffer<BufferT>::flip_ = std::move(other.flip_);
@@ -41,15 +42,15 @@ namespace cubey3 {
 		}
 
 		BufferMT LockFrontBuffer() {
-			return BufferMT{ std::unique_lock<std::mutex>(front_buffer_mutex_), front_buffer() };
+			return BufferMT{ Lock(front_buffer_mutex_), front_buffer() };
 		}
 
 		BufferMT LockBackBuffer() {
-			return BufferMT{ std::unique_lock<std::mutex>(back_buffer_mutex_), back_buffer() };
+			return BufferMT{ Lock(back_buffer_mutex_), back_buffer() };
 		}
 
 	protected:
-		mutable std::mutex front_buffer_mutex_;
-		mutable std::mutex back_buffer_mutex_;
+		std::mutex front_buffer_mutex_;
+		std::mutex back_buffer_mutex_;
 	};
 }

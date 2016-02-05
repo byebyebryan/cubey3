@@ -6,35 +6,19 @@
 
 using namespace cubey3;
 
-DuoBufferMT<int> duo_buffer_mt;
-
 void ThreadWork() {
-	for (int i = 0; i < 100; i++) {
-		duo_buffer_mt.LockFrontBuffer().buffer_ += 100;
+	Logger::GetService()->LogToConsole("hello");
 
-		//duo_buffer_mt.SwapMT();
-
-		std::cout << duo_buffer_mt.LockFrontBuffer().buffer_ << std::endl;
-		//std::cout << duo_buffer_mt.LockBackBuffer().buffer_ << std::endl;
-	}
-	
+	std::this_thread::sleep_for(std::chrono::seconds(1));
 }
 
 int main(void) {
-	{	duo_buffer_mt.LockFrontBuffer().buffer_ = 0;
-		duo_buffer_mt.LockBackBuffer().buffer_ = 1; 
-	}
+	TimeManager::CreateService();
+	ThreadManager::CreateService();
+	Logger::CreateService();
 
-	auto it = std::thread(ThreadWork);
+	ThreadManager::GetService()->LaunchThread("test",ThreadWork);
+	Logger::GetService()->LogToConsole("hello");
 
-	for (int i = 0; i < 100; i++) {
-		duo_buffer_mt.LockFrontBuffer().buffer_ += 1;
-
-		//duo_buffer_mt.SwapMT();
-
-		std::cout << duo_buffer_mt.LockFrontBuffer().buffer_ << std::endl;
-		//std::cout << duo_buffer_mt.LockBackBuffer().buffer_ << std::endl;
-	}
-
-	it.join();
+	ThreadManager::DestroyService();
 }

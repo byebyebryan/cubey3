@@ -3,24 +3,23 @@
 #include <string>
 #include <chrono>
 
+#include "Utilities/Types.h"
 #include "IService.h"
 
 namespace cubey3 {
 	const std::string kDefaultTimeFormat = "%Y/%m/%d_%X";
 
-	using TimePoint = std::chrono::time_point<std::chrono::high_resolution_clock>;
-	using SystemTimePoint = std::chrono::time_point<std::chrono::system_clock>;
-
 	class TimeManager : public IService<TimeManager> {
 	public:
 		void OnCreate() override;
 
-		static double GetElapsedTime();
+		double GetElapsedTime(TimePoint start_time_point) const;
+		double GetElapsedTime() const;
 
 		static TimePoint GetCurrentTimePoint();
 		static SystemTimePoint GetCurrentSystemTimePoint();
 
-		static std::string GetTimeString(const SystemTimePoint& _system_time_point, const std::string& _format = kDefaultTimeFormat);
+		static std::string GetTimeString(const SystemTimePoint& _system_time_point = GetCurrentSystemTimePoint(), const std::string& _format = kDefaultTimeFormat);
 		static std::string GetCurrentTimeString(const std::string& _format = kDefaultTimeFormat);
 
 	private:
